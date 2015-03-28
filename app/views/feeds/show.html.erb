@@ -1,0 +1,42 @@
+
+<!-- <% @feed_tweets.each do |tweet| %>
+  <li><%= render "tweets/tweet", tweet: tweet %></li>
+<% end %> -->
+
+<h1>Welcome <%= current_user.username %>!</h1>
+
+<b>Your Feed!</b>
+<div class="infinite-tweets">
+
+  <script type="text/template">
+    <%% tweets.forEach(function (tweet) { %>
+      <li><%%= tweet.content %>
+        -- <a href="/users/<%%= tweet.user.id %>">
+             <%%= tweet.user.username %>
+           </a>
+        -- <%%= tweet.created_at %>
+
+        <%% if ( tweet.mentions.length > 0 ) { %>
+          <ul>
+            <%% tweet.mentions.forEach(function(mention) { %>
+              <li><a href="/users/<%%= mention.user.id %>"><%%= mention.user.username %></a></li>
+            <%% }); %>
+          </ul>
+        <%% } %>
+      </li>
+    <%% }); %>
+  </script>
+
+  <ul id="feed">
+
+  </ul>
+  <a href="javascript:void(0)" class="fetch-more">moar</a>
+</div>
+<%= render "tweets/form" %>
+
+<script charset="utf-8">
+  $(function(){
+    $('.tweet-compose').tweetCompose();
+    $('.infinite-tweets').infiniteTweets();
+  });
+</script>
